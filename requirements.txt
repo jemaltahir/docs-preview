@@ -3,7 +3,7 @@ GitPython==3.0.6
 
 ## This is for building the static pages
 # This is what we actually install
-mkdocs==1.0.4
+mkdocs==1.1.2
 mkdocs-material==6.1.0
 mdx-linkify==1.0
 mdx-environment==0.2.0
