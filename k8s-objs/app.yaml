@@ -35,7 +35,7 @@ items:
     resources: {}
     source:
       git:
-        uri: https://github.com/juhanikataja/docs-preview
+        uri: https://github.com/cscfi/docs-preview
       type: Git
     strategy:
       sourceStrategy:
@@ -76,7 +76,7 @@ items:
     resources: {}
     source:
       git:
-        uri: https://github.com/juhanikataja/docs-preview
+        uri: https://github.com/cscfi/docs-preview
         ref: devel
       type: Git
     strategy:
