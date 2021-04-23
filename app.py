@@ -81,12 +81,12 @@ def buildRef(repo, ref, state):
   """
   global config
 
-  if not str(ref.commit) == state["built"]:
-    print(str(ref.commit), state["built"])
+  print(str(ref.commit), state["built"])
+  buildpath = os.path.join(config["buildRoot"], str(ref))
+
+  if not str(ref.commit) == state["built"] or not os.path.isdir(buildpath):
     print("re-building %s in %s" % (ref, ref.commit))
     repo.git.checkout(ref)
-    buildpath = config["buildRoot"]
-    buildpath = os.path.join(buildpath, str(ref))
     print("buildpath = %s" % (buildpath))
     mkdirp(buildpath)
     cmd = "sh -c 'cd %s && mkdocs build --site-dir %s 2>&1'" % (config["workPath"], buildpath)
