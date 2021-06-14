@@ -89,6 +89,13 @@ def buildRef(repo, ref, state):
     repo.git.checkout(ref)
     print("buildpath = %s" % (buildpath))
     mkdirp(buildpath)
+
+
+    cmd = "sh -c 'cd %s && ./scripts/generate_alpha.sh 2>&1'" % (config["workPath"])
+    print("Executing: %s" % (cmd))
+    cmdout = os.popen(cmd)
+    print(cmdout.read())
+
     cmd = "sh -c 'cd %s && mkdocs build --site-dir %s 2>&1'" % (config["workPath"], buildpath)
     print("Executing: %s" % (cmd))
     cmdout = os.popen(cmd)
