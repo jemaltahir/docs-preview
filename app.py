@@ -91,10 +91,13 @@ def buildRef(repo, ref, state):
     mkdirp(buildpath)
 
 
-    cmd = "sh -c 'cd %s && ./scripts/generate_alpha.sh 2>&1'" % (config["workPath"])
-    print("Executing: %s" % (cmd))
-    cmdout = os.popen(cmd)
-    print(cmdout.read())
+    scripts=["generate_alpha.sh","generate_by_system.sh","generate_new.sh"]
+
+    for script in scripts:
+        cmd = "sh -c 'cd %s && ./scripts/%s 2>&1'" % (config["workPath"],script)
+        print("Executing: %s" % (cmd))
+        cmdout = os.popen(cmd)
+        print(cmdout.read())
 
     cmd = "sh -c 'cd %s && mkdocs build --site-dir %s 2>&1'" % (config["workPath"], buildpath)
     print("Executing: %s" % (cmd))
