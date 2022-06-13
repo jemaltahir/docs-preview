@@ -103,8 +103,23 @@ def buildRef(repo, ref, state):
     print("Executing: %s" % (cmd))
     cmdout = os.popen(cmd)
     print(cmdout.read())
-    
+
     state["built"] = str(ref.commit)
+
+def cleanUpZombies():
+    #
+    # We want to clean all Zombies:
+    # * When spid is 0, child precesses exist, but they are still alive
+    # * When ChildProcessError raises, means that there is no childs left
+    #
+    print("Cleaning up Zombies")
+    spid = -1
+    while spid != 0:
+      try:
+        spid, status, rusage = os.wait3(os.WNOHANG)
+        print("Process %d with status %d" % (spid, status))
+      except ChildProcessError:
+        break
 
 def pruneBuilds(repo, origin):
   repo, origin = initRepo(config["workPath"], config["remoteUrl"])
@@ -112,7 +127,7 @@ def pruneBuilds(repo, origin):
     builtrefs = os.listdir(config["buildRoot"]+'/origin')
   except FileNotFoundError:
     print("Clean buildRoot")
-    return 
+    return
 
   srefs = [str(x) for x in origin.refs]
   builtrefs = ['origin/'+str(x) for x in builtrefs]
@@ -159,6 +174,8 @@ def listenBuild(secret):
   # Refresh builds
   for ref in origin.refs:
     buildRef(repo, ref, buildState[str(ref)])
+
+  cleanUpZombies()
 
   return "listenBuilt:<br>" + output
 
