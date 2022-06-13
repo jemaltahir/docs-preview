@@ -86,6 +86,7 @@ def buildRef(repo, ref, state):
 
   if not str(ref.commit) == state["built"] or not os.path.isdir(buildpath):
     print("re-building %s in %s" % (ref, ref.commit))
+    repo.git.reset('--hard',ref)
     repo.git.checkout(ref)
     print("buildpath = %s" % (buildpath))
     mkdirp(buildpath)
