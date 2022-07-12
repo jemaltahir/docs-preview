@@ -107,15 +107,11 @@ def buildRef(repo, ref, state):
     state["built"] = str(ref.commit)
 
 def cleanUpZombies():
-"""
-We want to clean all Zombies:
-* When spid is 0, child processes exist, but they are still alive
-* When ChildProcessError raises, it means that there are no children left
-"""
-    # We want to clean all Zombies:
-    # * When spid is 0, child precesses exist, but they are still alive
-    # * When ChildProcessError raises, means that there is no childs left
-    #
+    """
+    We want to clean all Zombies:
+    * When spid is 0, child processes exist, but they are still alive
+    * When ChildProcessError raises, it means that there are no children left
+    """
     print("Cleaning up Zombies")
     spid = -1
     while spid != 0:
