@@ -1,4 +1,4 @@
-flask==1.0.2
+flask==2.1.2
 GitPython==3.0.6
 
 ## This is for building the static pages
